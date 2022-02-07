@@ -1,0 +1,26 @@
+ static int rank[];
+ static int p[];
+ 
+ public static void union(int a,int b) {
+          int x = get(a);
+          int y = get(b);
+ 
+          if(x==y){
+              return;
+          }
+          if(rank[x]==rank[y]){
+              rank[x]++;
+          }
+          if(rank[x]>rank[y]){
+              p[y] = x;
+              extra[y] = score[x];
+          }else{
+              p[x] = y;
+              extra[x] = score[y];
+          }
+    }
+    
+    
+    public static int get(int a){
+        return (p[a]==a) ? a:get(p[a]) ;
+    }
