@@ -1,6 +1,16 @@
  static int rank[];
  static int p[];
  
+ /*
+ p = new int[n+1];
+ rank = new int[n+1];
+ for(int i=1;i<=n;i++){
+ p[i] = i;
+ rank[i]=1;
+ }
+ */
+ 
+ 
  public static void union(int a,int b) {
           int x = get(a);
           int y = get(b);
