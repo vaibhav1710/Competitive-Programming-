@@ -1,10 +1,12 @@
 static long bit[1_000_00]; // '1' index based array
  
+
 public static void update(int n,int i,int x){
 for(;i<n;i+=(i&(-i))){
 bit[i] += x;
 }
 }
+
 
 public static long sum(int i){
 long sum=0;
