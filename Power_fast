@@ -1,0 +1,45 @@
+static long power(long x, long y, long p)
+    {
+
+        if(y==0)
+            return 1;
+        if(x==0)
+            return 0;
+        long res = 1;
+        x = x % p;
+
+        while (y > 0) {
+
+            if (y % 2 == 1)
+                res = (res * x) % p;
+
+            y = y >> 1;
+            x = (x * x) % p;
+        }
+
+        return res;
+    }
+    
+/////////////////////////////////////////
+    
+    
+    static long power(long x, long y)
+    {
+
+        if(y==0)
+            return 1;
+        if(x==0)
+            return 0;
+        long res = 1;
+
+        while (y > 0) {
+
+            if (y % 2 == 1)
+                res = (res * x);
+
+            y = y >> 1;
+            x = (x * x);
+        }
+
+        return res;
+    }
