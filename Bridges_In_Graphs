@@ -1,0 +1,38 @@
+    public void bridgefind(int n){ // n is no. of vertices in graph
+        
+        int low[] = new int[n];  // lowest entry among it's adjacent node
+        int tin[] = new int[n];
+        int vis[] = new int[n];
+        int timer =1;
+        for(int i=0;i<n;i++){
+            if(vis[i]==0){
+                dfs(i,-1,low,tin,vis, timer);  // dfs
+            }
+        }
+    }
+    
+public void dfs(int node,int parent , int [] low , int [] tin,int []vis ,int timer){
+        
+        vis[node] = 1;
+        low[node] = tin[node] = timer++;
+        
+        for(int nbr : graph[node]){
+            
+            if(nbr==parent) continue; 
+            if(vis[nbr]==0){ --> Condn. 1 , if nbr is not visited
+                dfs(nbr,node,low,tin,vis,timer);
+                low[node] = Math.min(low[node],low[nbr]);
+                
+                if(low[nbr] > tin[node]){   // condition for bridge for edge b/w nbr and node
+                    List<Integer> temp = new ArrayList<>();
+                    temp.add(nbr);
+                    temp.add(node);
+                    res.add(temp);
+                }
+            }else{   ---> Cond2. if nbr is already visited
+                low[node] = Math.min(low[node],tin[nbr]);
+            }
+        }
+        
+        
+    
