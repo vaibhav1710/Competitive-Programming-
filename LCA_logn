@@ -1,0 +1,64 @@
+
+// dfs varies problem to problem , it's main work is to calculate the parent and level for each node
+// node are 0th index --> < N
+// maxbit depends on height of tree --> log2(N) (not sure)
+
+
+public static void dfs(int child, int l){
+
+        level[child] = l;
+        for(int x:graph[child]){
+            parent[x] = child;
+            dfs(x,l+1);
+        }
+       return;
+    }
+    
+    
+    static void build(int n){
+        table = new int[MAXBIT+1][n];
+        table[0] = parent;
+
+        for(int p=1;p<=MAXBIT;p++){
+            for(int i=1;i<n;i++){
+                int par = table[p-1][i];
+                table[p][i] = table[p-1][par];
+            }
+        }
+
+    }
+    
+    
+    static int kthancestor(int a, int k){
+
+        for(int i=0;i<=MAXBIT;i++){
+            int mask = (1<<i);
+            if((k&mask)>0){
+                a = table[i][a];
+            }
+        }
+        return a;
+    }
+    
+    
+    static int lca(int u,int v){
+        if(level[u] > level[v]){
+            int t = u;
+            u=v;
+            v=t;
+        }
+        int k = level[v] - level[u];
+        v = kthancestor(v,k);
+        if(u==v) return u;
+        for(int i=MAXBIT;i>=0;i--){
+            int up = table[i][u];
+            int vp = table[i][v];
+            if(up!=vp){
+                u = up;
+                v = vp;
+            }
+        }
+        u = parent[u];
+
+        return u;
+    }
