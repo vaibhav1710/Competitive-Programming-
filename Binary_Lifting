@@ -1,0 +1,44 @@
+class TreeAncestor {
+    int maxbit;
+    int v[][] ;
+    
+    public TreeAncestor(int n, int[] parent) {
+        maxbit=0;
+       while((1<<maxbit)<=n){
+           maxbit++;
+       }
+        maxbit++;
+      // v[i][j] --> 2^ith parent of node j
+      
+        v = new int[maxbit+1][n];
+        v[0] = parent;
+        
+        // if the tree is ordered , then we can use a depth array to store depth of each node, else use dfs
+        // depth[i] = depth[parent[i]] + 1
+        
+        // if tree is not ordered than , maxbit loop should be outside
+        
+       for(int i=1;i<maxbit;i++){
+           for(int j=0;j<n;j++){
+               int last = v[i-1][j];
+               if(last==-1){
+                   v[i][j] = -1;
+               }else{
+                   v[i][j] = v[i-1][last];
+               }
+           }
+       }
+       
+    }
+    
+    public int getKthAncestor(int node, int k) {
+        for(int i=0;i<maxbit;i++){
+            if((k & (1<<i)) > 0){
+                Integer val = v[i][node];
+                if(val==-1) return -1;
+                node=val;
+            }
+        }
+        return node;
+}
+}
