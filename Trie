@@ -1,4 +1,6 @@
 // Will optimize further 22/2/23
+*https://codeforces.com/contest/1792/submission/194641849*
+// for understanding refer above problem and solution
 
 class Node {
     Node links[] = new Node[26]; 
