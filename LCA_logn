@@ -2,6 +2,7 @@
 // dfs varies problem to problem , it's main work is to calculate the parent and level for each node
 // node are 0th index --> < N
 // maxbit depends on height of tree --> log2(N) (not sure)
+// parent of root is equal to root only(0) & not -1
 
 
 public static void dfs(int child, int l){
