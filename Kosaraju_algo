@@ -1,0 +1,91 @@
+//Question - https://cses.fi/problemset/result/5918112/
+
+// dfs --> adding elements in stack --> reversing graph --> poping one at a time and dfs traversing again to find the SCC
+
+import java.io.*;
+import java.util.*;
+
+class CSES {
+
+    static  ArrayList<Integer> al[];
+  static   boolean vis[];
+    static ArrayList<ArrayList<Integer>> anal ;
+    static Stack<Integer> stk ;
+    public static void main(String[] args) throws IOException {
+        BufferedReader sc =
+                new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out = new PrintWriter(System.out);
+        StringTokenizer st = new StringTokenizer(sc.readLine());
+       int n = Integer.parseInt(st.nextToken());
+       int m =   Integer.parseInt(st.nextToken());
+       al = new ArrayList[n+1];
+       for(int i=0;i<=n;i++){
+           al[i] = new ArrayList<>();
+       }
+       anal = new ArrayList<>();
+       vis  = new boolean[n+1];
+       stk = new Stack<>();
+       for(int i=0;i<m;i++){
+           st = new StringTokenizer(sc.readLine());
+           int a = Integer.parseInt(st.nextToken());
+           int b = Integer.parseInt(st.nextToken());
+           al[a].add(b);
+       }
+       for(int i=1;i<=n;i++){
+           if(!vis[i]){
+               dfs(i);
+           }
+       }
+       graphtranspose(n);
+      while(stk.size()>0){
+          int i = stk.pop();
+          if(!vis[i]){
+              ArrayList<Integer> a = new ArrayList<>();
+               scc(i,a);
+               anal.add(a);
+           }
+       }
+
+      if(anal.size()>1){
+          out.println("NO");
+          if(al[anal.get(0).get(0)].contains(anal.get(1).get(0))) {
+              out.println(anal.get(0).get(0) + " " + anal.get(1).get(0));
+          }else{
+              out.println(anal.get(1).get(0) + " " + anal.get(0).get(0));
+          }
+      }else{
+          out.println("YES");
+      }
+
+       // out.println((comp == 1) ? ans : "IMPOSSIBLE");
+        out.close();
+    }
+
+    public static void scc(int node,ArrayList<Integer> a){
+        vis[node] = true;
+        a.add(node);
+        for(int v:al[node]){
+            if(!vis[v]) scc(v,a);
+        }
+    }
+
+    public static void graphtranspose(int n){
+        ArrayList<Integer> a1[] = new ArrayList[n+1];
+        for(int i=0;i<=n;i++) a1[i] = new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            for(int v:al[i]){
+                a1[v].add(i);
+            }
+        }
+        al = new ArrayList[n+1];
+        al = a1;
+        vis= new boolean[n+1];
+    }
+    public static void dfs(int node){
+        vis[node] = true;
+        for(int v:al[node]){
+            if(!vis[v]) dfs(v);
+        }
+        stk.add(node);
+    }
+}
