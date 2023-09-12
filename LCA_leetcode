@@ -1,0 +1,35 @@
+ public void dfs(int x, int f, int dep, List<Pair<Integer, Integer>> []g, int [][]father, int [][]w, int []d) {
+        father[0][x] = f;
+        d[x] = dep;
+        for (Pair<Integer, Integer> p: g[x]) {
+         
+            int c = p.getKey().intValue();// weight = p.getValue().intValue();
+            if (f == c) continue;
+          //  for (int j = 0; j < w[c].length; ++j)
+            //    w[c][j] = w[x][j];
+           // w[c][weight]++;
+            dfs(c, x, dep + 1, g, father, w, d);
+        }
+    }
+    public int lca(int x, int y, int [][]father, int []d) {
+        int m = father.length;
+        if (d[x] > d[y]) {
+            int t = x;
+            x = y;
+            y = t;
+        }
+       
+        for (int p = 0; (1 << p) <= d[y] - d[x]; ++p) {
+            if (((1 << p) & d[y] - d[x]) != 0) {
+                y = father[p][y];
+            }
+        }
+       
+        for (int p = m - 1; p >= 0; --p) {
+            if (father[p][x] != father[p][y]) {
+                x = father[p][x];
+                y = father[p][y];
+            }
+        }
+        return x == y ? x : father[0][x];
+    }
