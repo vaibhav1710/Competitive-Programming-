@@ -1,4 +1,44 @@
 // Will optimize further 22/2/23
+
+/*
+Another detailed implementation is down below**
+
+class Trie {
+    class Node {
+        Node[] children;
+        int cost;
+        boolean eow;
+
+        public Node() {
+            this.children = new Node[26];
+            for (int i = 0; i < 26; i++) children[i] = null;
+            this.cost = Integer.MAX_VALUE;
+            this.eow = false;
+        }
+    }
+
+    Node root = new Node();
+
+    public void insert(String word, int c) {
+        Node treeRoot = root;
+        for (int i = 0; i < word.length(); i++) {
+            int idx = word.charAt(i) - 'a';
+
+            if (treeRoot.children[idx] == null) {
+                treeRoot.children[idx] = new Node();
+            }
+
+            if (i == word.length() - 1) {
+                treeRoot.children[idx].cost = Math.min(c, treeRoot.children[idx].cost); 
+                treeRoot.children[idx].eow = true;
+            }
+            treeRoot = treeRoot.children[idx];
+        }
+    }
+}
+*/
+
+
 *https://codeforces.com/contest/1792/submission/194641849*
 // for understanding refer above problem and solution
 
@@ -108,3 +148,4 @@ public class Trie {
 	}
 }
 }
+
